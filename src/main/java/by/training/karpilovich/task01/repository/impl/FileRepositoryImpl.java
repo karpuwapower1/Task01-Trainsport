@@ -36,15 +36,8 @@ public class FileRepositoryImpl implements Repository {
 	}
 
 	public static Repository getRepository(String fileName) throws RepositoryException {
-		if (instance == null) {
-			instance = new FileRepositoryImpl(fileName);
-		}
+		instance = new FileRepositoryImpl(fileName);
 		return instance;
-	}
-
-	@Override
-	public Optional<List<PassengerWagon>> getAllWagons() {
-		return (train.size() == 0 ? Optional.empty() : Optional.of(train));
 	}
 
 	@Override

@@ -2,7 +2,6 @@ package by.training.karpilovich.task01.repository;
 
 import java.util.Collection;
 import java.util.List;
-import java.util.Optional;
 
 import by.training.karpilovich.task01.entity.PassengerWagon;
 import by.training.karpilovich.task01.exception.RepositoryException;
@@ -10,8 +9,6 @@ import by.training.karpilovich.task01.specification.query.QuerySpecification;
 import by.training.karpilovich.task01.specification.update.UpdateSpecification;
 
 public interface Repository {
-
-	Optional<List<PassengerWagon>> getAllWagons();
 
 	boolean add(PassengerWagon wagon) throws RepositoryException;
 	

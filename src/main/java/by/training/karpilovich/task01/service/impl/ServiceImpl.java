@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
-import java.util.Optional;
 
 import by.training.karpilovich.task01.entity.PassengerWagon;
 import by.training.karpilovich.task01.exception.RepositoryException;
@@ -13,6 +12,7 @@ import by.training.karpilovich.task01.factory.RepositoryFactory;
 import by.training.karpilovich.task01.repository.Repository;
 import by.training.karpilovich.task01.service.Service;
 import by.training.karpilovich.task01.specification.query.QuerySpecification;
+import by.training.karpilovich.task01.specification.query.impl.QuerySpecificationAllWagons;
 import by.training.karpilovich.task01.specification.query.impl.QuerySpecificationBetweenPassengerCapacity;
 import by.training.karpilovich.task01.specification.query.impl.QuerySpecificationByNumber;
 import by.training.karpilovich.task01.specification.update.UpdateSpecification;
@@ -38,27 +38,22 @@ public class ServiceImpl implements Service {
 	}
 
 	@Override
-	public int getTrainCapacity() {
-		Optional<List<PassengerWagon>> optional = repository.getAllWagons();
+	public int getTrainCapacity() throws ServiceException {
 		int capacity = 0;
-		if (optional.isPresent()) {
-			List<PassengerWagon> train = optional.get();
-			for (PassengerWagon wagon : train) {
-				capacity += wagon.getCapacity();
-			}
+		List<PassengerWagon> train = getAllWagons();
+		for (PassengerWagon wagon : train) {
+			capacity += wagon.getCapacity();
 		}
 		return capacity;
+
 	}
 
 	@Override
-	public int getTrainLuggageCapacity() {
-		Optional<List<PassengerWagon>> optional = repository.getAllWagons();
+	public int getTrainLuggageCapacity() throws ServiceException {
 		int luggageCapacity = 0;
-		if (optional.isPresent()) {
-			List<PassengerWagon> train = optional.get();
-			for (PassengerWagon wagon : train) {
-				luggageCapacity += wagon.getCapacity();
-			}
+		List<PassengerWagon> train = getAllWagons();
+		for (PassengerWagon wagon : train) {
+			luggageCapacity += wagon.getCapacity();
 		}
 		return luggageCapacity;
 	}
@@ -115,13 +110,22 @@ public class ServiceImpl implements Service {
 		if (validator.isNull(comparator)) {
 			throw new ServiceException();
 		}
-		Optional<List<PassengerWagon>> optional = repository.getAllWagons();
+		List<PassengerWagon> train = getAllWagons();
 		List<PassengerWagon> copy = new ArrayList<>();
-		if (optional.isPresent()) {
-			copy = makeCopy(optional.get());
-			Collections.sort(copy, comparator);
-		}
+		copy = makeCopy(train);
+		Collections.sort(copy, comparator);
 		return copy;
+	}
+
+	private List<PassengerWagon> getAllWagons() throws ServiceException {
+		List<PassengerWagon> wagons = new ArrayList<>();
+		try {
+			QuerySpecification specification = new QuerySpecificationAllWagons();
+			wagons = repository.query(specification);
+		} catch (RepositoryException e) {
+			throw new ServiceException(e);
+		}
+		return wagons;
 	}
 
 	private List<PassengerWagon> makeCopy(List<PassengerWagon> train) {

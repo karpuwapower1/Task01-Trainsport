@@ -2,7 +2,7 @@ package by.training.karpilovich.task01.entity;
 
 public enum PassengerWagonClass {
 	
-	FIRST_CLASS(20), SECOND_CLASS(30), THIRD_CLASS(60);
+	FIRST(10), SECOND(20), THIRDT(30);
 	
 	private int capacity;
 	

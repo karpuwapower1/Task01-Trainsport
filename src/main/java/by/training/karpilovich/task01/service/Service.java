@@ -8,9 +8,9 @@ import by.training.karpilovich.task01.exception.ServiceException;
 
 public interface Service {
 	
-	int getTrainCapacity();
+	int getTrainCapacity() throws ServiceException;
 	
-	int getTrainLuggageCapacity();
+	int getTrainLuggageCapacity() throws ServiceException;
 	
 	boolean updateNumber(int number, int newNumber) throws ServiceException;
 	

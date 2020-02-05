@@ -10,8 +10,9 @@ public class PassengerWagonFormat {
 
 	public static final String DELIMETER = " ";
 	public static final int WAGON_NUMBER = 0;
-	public static final int WAGON_CLASS = 1;
-	public static final int LUGGAGE_WAGON_TYPE = 2;
+	public static final int LUGGAGE_WAGON_TYPE = 1;
+	public static final int WAGON_CLASS = 2;
+
 
 	WagonFactory factory = WagonFactory.getFactory();
 
