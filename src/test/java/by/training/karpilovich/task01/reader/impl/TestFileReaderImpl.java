@@ -2,7 +2,6 @@ package by.training.karpilovich.task01.reader.impl;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -12,7 +11,7 @@ import by.training.karpilovich.task01.entity.PassengerWagon;
 import by.training.karpilovich.task01.entity.PassengerWagonClass;
 import by.training.karpilovich.task01.exception.ReaderException;
 import by.training.karpilovich.task01.exception.RepositoryException;
-import by.training.karpilovich.task01.reader.impl.FileReader;
+import by.training.karpilovich.task01.reader.Reader;
 
 public class TestFileReaderImpl {
 
@@ -37,19 +36,8 @@ public class TestFileReaderImpl {
 
 	@Test
 	public void testRead() throws ReaderException, RepositoryException {
-		FileReader fileReader = new FileReader(FILE);
-		Optional<List<PassengerWagon>> optional = fileReader.read();
-		List<PassengerWagon> actual = optional.get();
-		initList();
-		Assert.assertEquals(wagons, actual);
-		;
-	}
-
-	@Test(expected = ReaderException.class)
-	public void testReadNonexistingFile() throws ReaderException, RepositoryException {
-		FileReader fileReader = new FileReader("unknownFile.txt");
-		Optional<List<PassengerWagon>> optional = fileReader.read();
-		List<PassengerWagon> actual = optional.get();
+		Reader fileReader = FileReader.getReader(FILE);
+		List<PassengerWagon> actual = fileReader.read();
 		initList();
 		Assert.assertEquals(wagons, actual);
 	}

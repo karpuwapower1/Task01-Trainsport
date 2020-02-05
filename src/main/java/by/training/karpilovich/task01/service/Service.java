@@ -8,15 +8,15 @@ import by.training.karpilovich.task01.exception.ServiceException;
 
 public interface Service {
 	
-	int getTrainCapacity() throws ServiceException;
+	int getTrainCapacity();
 	
-	int getTrainLuggageCapacity() throws ServiceException;
+	int getTrainLuggageCapacity();
 	
-	boolean updateNumber(int number, int newNumber) throws ServiceException;
+	List<PassengerWagon> updateNumber(int number, int newNumber) throws ServiceException;
 	
-	boolean updateCapacity(int capacity, int newCapacity) throws ServiceException;
+	List<PassengerWagon> updateCapacity(int capacity, int newCapacity) throws ServiceException;
 	
-	List<PassengerWagon> getWagonByNumber(int number) throws ServiceException;
+	List<PassengerWagon> getWagonByNumber(int number);
 	
 	List<PassengerWagon> getWagonBetweenCapacity(int minCapacity, int maxCapacity) throws ServiceException;
 	

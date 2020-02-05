@@ -1,20 +1,21 @@
 package by.training.karpilovich.task01.entity;
 
 public class LuggageWagon extends AbstractWagon {
-	
+
 	private LuggageWagonType type;
-	
-	public LuggageWagon() {}
-	
+
+	public LuggageWagon() {
+	}
+
 	public LuggageWagon(int number, LuggageWagonType type) {
-		super(number, type.getCapacity());
+		super(number);
 		this.type = type;
 	}
-	
+
 	public int getCapacity() {
 		return type.getCapacity();
 	}
-	
+
 	public void setCapacity(int capacity) {
 		type.setCapacity(capacity);
 	}
@@ -48,7 +49,7 @@ public class LuggageWagon extends AbstractWagon {
 		if (obj == null || getClass() != obj.getClass())
 			return false;
 		if (!super.equals(obj))
-				return false;
+			return false;
 		LuggageWagon other = (LuggageWagon) obj;
 		if (type != other.type)
 			return false;

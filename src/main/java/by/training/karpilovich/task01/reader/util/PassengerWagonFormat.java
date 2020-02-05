@@ -24,9 +24,9 @@ public class PassengerWagonFormat {
 			LuggageWagonType luggageWagonType = LuggageWagonType.valueOf(parameters[LUGGAGE_WAGON_TYPE].toUpperCase());
 			return factory.getPassengerWagon(wagonNumber, luggageWagonType, type);
 		} catch (NumberFormatException e) {
-			throw new PassengerWagonFormatException(e);
+			throw new PassengerWagonFormatException("Invalid number", e);
 		} catch (IllegalArgumentException | NullPointerException e) {
-			throw new PassengerWagonFormatException(e);
+			throw new PassengerWagonFormatException("Invalid enum type", e);
 		}
 	}
 

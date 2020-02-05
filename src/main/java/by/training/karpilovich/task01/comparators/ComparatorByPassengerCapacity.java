@@ -9,5 +9,4 @@ public class ComparatorByPassengerCapacity implements Comparator<PassengerWagon>
 	public int compare(PassengerWagon wagon1, PassengerWagon wagon2) {
 		return wagon1.getCapacity() - wagon2.getCapacity();
 	}
-
 }

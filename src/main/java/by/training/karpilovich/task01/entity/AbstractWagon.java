@@ -2,31 +2,28 @@ package by.training.karpilovich.task01.entity;
 
 public abstract class AbstractWagon {
 
-	private int number;
-	private int capacity;
+	protected int number;
 	
-	public AbstractWagon() {}
+	public AbstractWagon() {
+	}
 	
-	public AbstractWagon(int number, int capacity) {
-		this.number = number;
-	}
-
-	public int getNumber() {
-		return number;
-	}
-
-	public void setNumber(int number) {
+	public AbstractWagon(int number) {
 		this.number = number;
 	}
 	
 	public abstract int getCapacity();
 
+	public void setNumber(int number) {
+		this.number = number;
+	}
+	
+	public int getNumber() {
+		return number;
+	}
+
 	@Override
 	public int hashCode() {
-		final int prime = 17;
-		int result = 1;
-		result = prime * result + capacity;
-		return result;
+		return number;
 	}
 
 	@Override

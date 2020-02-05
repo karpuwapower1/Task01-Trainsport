@@ -6,12 +6,7 @@ public class Validator {
 		return min <= max;
 	}
 	
-	public boolean isCapaciteGreaterThanZero(int capacity) {
+	public boolean isCapacityGreaterThanZero(int capacity) {
 		return capacity > 0;
 	}
-	
-	public boolean isNull(Object obj) {
-		return obj == null;
-	}
-
 }

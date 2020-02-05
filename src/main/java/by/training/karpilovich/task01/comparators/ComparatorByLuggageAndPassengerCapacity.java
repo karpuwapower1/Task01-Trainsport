@@ -11,7 +11,5 @@ public class ComparatorByLuggageAndPassengerCapacity implements Comparator<Passe
 		Comparator<PassengerWagon> comparator = Comparator.comparing(PassengerWagon::getLuggageCapacity)
 				.thenComparing(PassengerWagon::getCapacity);
 		return comparator.compare(o1, o2);
-
 	}
-
 }
