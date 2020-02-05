@@ -24,8 +24,8 @@ public class FileRepositoryImpl implements Repository {
 	private static FileRepositoryImpl instance;
 
 	private FileRepositoryImpl(String fileName) throws RepositoryException {
-		reader = new FileReader(fileName);
 		try {
+			reader = new FileReader(fileName);
 			Optional<List<PassengerWagon>> optional = reader.read();
 			if (optional.isPresent()) {
 				train = optional.get();

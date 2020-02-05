@@ -2,6 +2,7 @@ package by.training.karpilovich.task01.reader.impl;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.URL;
 import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.List;
@@ -18,9 +19,12 @@ public class FileReader implements Reader {
 	private File file;
 	private PassengerWagonFormat format = new PassengerWagonFormat();
 
-	public FileReader(String fileName) {
-		System.out.println(getClass().getClassLoader().getResource(fileName).getFile());
-		file = new File(getClass().getClassLoader().getResource(fileName).getFile());
+	public FileReader(String fileName) throws ReaderException {
+		URL url = getClass().getClassLoader().getResource(fileName);
+		if (url == null) {
+			throw new ReaderException("Illegal file");
+		}
+		file = new File(url.getFile());
 	}
 
 	public void setFile(File file) {
@@ -39,7 +43,7 @@ public class FileReader implements Reader {
 				try {
 					passengerWagons.add(format.parse(wagon));
 				} catch (PassengerWagonFormatException e) {
-//					throw new ReaderException("File is damaged", e);
+					throw new ReaderException("File is damaged", e);
 				}
 			}
 			optionalList = Optional.ofNullable(passengerWagons);
@@ -47,13 +51,5 @@ public class FileReader implements Reader {
 			throw new ReaderException("IOException while reading a file");
 		}
 		return optionalList;
-	}
-}
-
-class Test {
-	public static void main(String[] args) throws ReaderException {
-		FileReader fileReader = new FileReader("1.txt");
-		Optional<List<PassengerWagon>> optional = fileReader.read();
-		List<PassengerWagon> actual = optional.get();
 	}
 }

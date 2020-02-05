@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
-
 import by.training.karpilovich.task01.entity.PassengerWagon;
 import by.training.karpilovich.task01.exception.RepositoryException;
 import by.training.karpilovich.task01.exception.ServiceException;
@@ -19,6 +18,7 @@ import by.training.karpilovich.task01.specification.update.UpdateSpecification;
 import by.training.karpilovich.task01.specification.update.impl.UpdateSpecificationByNumber;
 import by.training.karpilovich.task01.specification.update.impl.UpdateSpecificationByPassengerCapacity;
 import by.training.karpilovich.task01.validator.Validator;
+
 
 public class ServiceImpl implements Service {
 
