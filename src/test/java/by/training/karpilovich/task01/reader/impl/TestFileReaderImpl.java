@@ -1,4 +1,4 @@
-package by.training.karpilovich.task01reader.impl;
+package by.training.karpilovich.task01.reader.impl;
 
 import java.util.ArrayList;
 import java.util.List;
