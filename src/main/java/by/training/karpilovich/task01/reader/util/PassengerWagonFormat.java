@@ -20,8 +20,8 @@ public class PassengerWagonFormat {
 		String[] parameters = wagon.split(DELIMETER);
 		try {
 			int wagonNumber = Integer.parseInt(parameters[WAGON_NUMBER]);
-			PassengerWagonClass type = PassengerWagonClass.valueOf(parameters[WAGON_CLASS]);
-			LuggageWagonType luggageWagonType = LuggageWagonType.valueOf(parameters[LUGGAGE_WAGON_TYPE]);
+			PassengerWagonClass type = PassengerWagonClass.valueOf(parameters[WAGON_CLASS].toUpperCase());
+			LuggageWagonType luggageWagonType = LuggageWagonType.valueOf(parameters[LUGGAGE_WAGON_TYPE].toUpperCase());
 			return factory.getPassengerWagon(wagonNumber, luggageWagonType, type);
 		} catch (NumberFormatException e) {
 			throw new PassengerWagonFormatException(e);
