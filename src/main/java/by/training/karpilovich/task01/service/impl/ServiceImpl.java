@@ -12,7 +12,7 @@ import by.training.karpilovich.task01.repository.Repository;
 import by.training.karpilovich.task01.service.Service;
 import by.training.karpilovich.task01.specification.query.QuerySpecification;
 import by.training.karpilovich.task01.specification.query.impl.QuerySpecificationAllWagons;
-import by.training.karpilovich.task01.specification.query.impl.QuerySpecificationBetweenPassengerCapacity;
+import by.training.karpilovich.task01.specification.query.impl.QuerySpecificationByCapacity;
 import by.training.karpilovich.task01.specification.query.impl.QuerySpecificationByNumber;
 import by.training.karpilovich.task01.specification.update.UpdateSpecification;
 import by.training.karpilovich.task01.specification.update.impl.UpdateSpecificationByNumber;
@@ -98,7 +98,7 @@ public class ServiceImpl implements Service {
 			throw new ServiceException();
 		}
 		try {
-			QuerySpecification specification = new QuerySpecificationBetweenPassengerCapacity(minCapacity, maxCapacity);
+			QuerySpecification specification = new QuerySpecificationByCapacity(minCapacity, maxCapacity);
 			return repository.query(specification);
 		} catch (RepositoryException e) {
 			throw new ServiceException(e);
