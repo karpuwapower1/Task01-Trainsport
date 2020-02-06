@@ -11,11 +11,6 @@ import by.training.karpilovich.task01.factory.WagonFactory;
 
 public class TestPassengerWagonFormat {
 
-	public static final String DELIMETER = " ";
-	public static final int WAGON_NUMBER = 0;
-	public static final int LUGGAGE_WAGON_TYPE = 1;
-	public static final int WAGON_CLASS = 2;
-
 	WagonFactory factory = WagonFactory.getFactory();
 
 	@Test

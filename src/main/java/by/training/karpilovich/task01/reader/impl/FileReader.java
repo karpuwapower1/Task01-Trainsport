@@ -19,26 +19,27 @@ public class FileReader implements Reader {
 	private PassengerWagonFormat format = new PassengerWagonFormat();
 	private static FileReader fileReader;
 	
-	private FileReader(String fileName) {
-		this.fileName = fileName;
+	private FileReader() {
 	}
 	
-	public static Reader getReader(String fileName) {
+	public static Reader getReader() {
 		if (fileReader == null) {
-			fileReader = new FileReader(fileName);
+			fileReader = new FileReader();
 		}
 		return fileReader;
 	}
-
+	
+	public void setFileName(String fileName) {
+		this.fileName = fileName;
+	}
+	
 	public List<PassengerWagon> read() throws ReaderException {
 		URL url = this.getClass().getClassLoader().getResource(fileName);
-		System.out.println(url);
-		
-		List<PassengerWagon> passengerWagons;
 		if (url == null) {
 			throw new ReaderException("File doesn't exists");
 		}
 		File file = new File(url.getFile());
+		List<PassengerWagon> passengerWagons;
 		try {
 			List<String> wagons = Files.readAllLines(file.toPath());
 			passengerWagons = new ArrayList<>(wagons.size());

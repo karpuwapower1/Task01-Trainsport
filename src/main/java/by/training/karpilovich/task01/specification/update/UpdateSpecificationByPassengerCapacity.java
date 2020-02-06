@@ -18,7 +18,7 @@ public class UpdateSpecificationByPassengerCapacity implements Specification {
 	@Override
 	public List<PassengerWagon> specify(List<PassengerWagon> wagons) {
 		for (PassengerWagon wagon : wagons) {
-			if (wagon.getCapacity() >= capacity) {
+			if (wagon.getCapacity() == capacity) {
 				wagon.setCapacity(newCapacity);
 			}
 		}

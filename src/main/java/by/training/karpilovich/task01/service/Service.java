@@ -12,13 +12,13 @@ public interface Service {
 	
 	int getTrainLuggageCapacity();
 	
-	List<PassengerWagon> updateNumber(int number, int newNumber) throws ServiceException;
+	List<PassengerWagon> updateNumber(int number, PassengerWagon wagon) throws ServiceException;
 	
 	List<PassengerWagon> updateCapacity(int capacity, int newCapacity) throws ServiceException;
 	
 	List<PassengerWagon> getWagonByNumber(int number);
 	
-	List<PassengerWagon> getWagonBetweenCapacity(int minCapacity, int maxCapacity) throws ServiceException;
+	List<PassengerWagon> getWagonByCapacity(int minCapacity, int maxCapacity) throws ServiceException;
 	
 	List<PassengerWagon> sort(Comparator<PassengerWagon> comparator) throws ServiceException;
 

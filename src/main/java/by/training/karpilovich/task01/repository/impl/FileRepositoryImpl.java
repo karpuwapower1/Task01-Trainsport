@@ -6,7 +6,6 @@ import java.util.List;
 import by.training.karpilovich.task01.entity.PassengerWagon;
 import by.training.karpilovich.task01.exception.ReaderException;
 import by.training.karpilovich.task01.exception.RepositoryException;
-import by.training.karpilovich.task01.reader.Reader;
 import by.training.karpilovich.task01.reader.impl.FileReader;
 import by.training.karpilovich.task01.repository.Repository;
 import by.training.karpilovich.task01.specification.Specification;
@@ -15,12 +14,13 @@ import by.training.karpilovich.task01.validator.Validator;
 public class FileRepositoryImpl implements Repository {
 
 	List<PassengerWagon> train = new ArrayList<>();
-	Reader reader;
+	FileReader reader;
 	Validator validator = new Validator();
 	private static FileRepositoryImpl instance;
 
 	private FileRepositoryImpl(String fileName) throws RepositoryException {
-		reader = FileReader.getReader(fileName);
+		reader = (FileReader) FileReader.getReader();
+		reader.setFileName(fileName);
 		try {
 			train = reader.read();
 		} catch (ReaderException e) {

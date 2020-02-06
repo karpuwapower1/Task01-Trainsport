@@ -18,15 +18,8 @@ public class SortSpecification implements Specification {
 
 	@Override
 	public List<PassengerWagon> specify(List<PassengerWagon> wagons) {
-		List<PassengerWagon> copy = makeCopy(wagons);
+		List<PassengerWagon> copy = new ArrayList<>(wagons);
 		Collections.sort(copy, comparator);
 		return copy;
 	}
-
-	private List<PassengerWagon> makeCopy(List<PassengerWagon> train) {
-		List<PassengerWagon> copy = new ArrayList<>(train.size());
-		Collections.copy(copy, train);
-		return copy;
-	}
-
 }

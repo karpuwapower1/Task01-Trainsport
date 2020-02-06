@@ -6,12 +6,12 @@ import java.util.List;
 import by.training.karpilovich.task01.entity.PassengerWagon;
 import by.training.karpilovich.task01.specification.Specification;
 
-public class QuerySpecificationByCapacity implements Specification {
+public class QuerySpecificationByMinMaxCapacity implements Specification {
 
 	private int minCapacity;
 	private int maxCapacity;
 
-	public QuerySpecificationByCapacity(int minCapacity, int maxCapacity) {
+	public QuerySpecificationByMinMaxCapacity(int minCapacity, int maxCapacity) {
 		this.minCapacity = minCapacity;
 		this.maxCapacity = maxCapacity;
 	}

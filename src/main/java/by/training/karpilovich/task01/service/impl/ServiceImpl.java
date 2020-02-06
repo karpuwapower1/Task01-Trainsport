@@ -11,7 +11,7 @@ import by.training.karpilovich.task01.repository.Repository;
 import by.training.karpilovich.task01.service.Service;
 import by.training.karpilovich.task01.specification.Specification;
 import by.training.karpilovich.task01.specification.query.QuerySpecificationAllWagons;
-import by.training.karpilovich.task01.specification.query.QuerySpecificationByCapacity;
+import by.training.karpilovich.task01.specification.query.QuerySpecificationByMinMaxCapacity;
 import by.training.karpilovich.task01.specification.query.QuerySpecificationByNumber;
 import by.training.karpilovich.task01.specification.sort.SortSpecification;
 import by.training.karpilovich.task01.specification.update.UpdateSpecificationByNumber;
@@ -23,17 +23,26 @@ public class ServiceImpl implements Service {
 	private static Repository repository;
 	private Validator validator = new Validator();
 	private Specification specification;
+	private static ServiceImpl instance;
 
-	public ServiceImpl() {
+	private ServiceImpl() {
 	}
 
-	public static void setRepository(String fileName) throws ServiceException {
+	public void setRepository(String fileName) throws ServiceException {
 		try {
 			RepositoryFactory factory = RepositoryFactory.getFactory();
 			repository = factory.getRepository(fileName);
 		} catch (RepositoryException e) {
+			throw new ServiceException("Exception while initializing a repository", e);
 			// TODO logging
 		}
+	}
+	
+	public static Service getService() {
+		if (instance == null) {
+			instance = new ServiceImpl();
+		}
+		return instance;
 	}
 
 	@Override
@@ -53,14 +62,15 @@ public class ServiceImpl implements Service {
 		List<PassengerWagon> train = repository.query(specification);
 		int luggageCapacity = 0;
 		for (PassengerWagon wagon : train) {
-			luggageCapacity += wagon.getCapacity();
+			luggageCapacity += wagon.getLuggageCapacity();
 		}
 		return luggageCapacity;
 	}
 
 	@Override
 	public List<PassengerWagon> updateCapacity(int capacity, int newCapacity) throws ServiceException {
-		if (!validator.isCapacityGreaterThanZero(capacity) || !validator.isCapacityGreaterThanZero(newCapacity)) {
+		if (!validator.isCapacityGreaterThanZero(capacity) 
+				|| !validator.isMinLessThanMax(capacity, newCapacity)) {
 			throw new ServiceException();
 		}
 		specification = new UpdateSpecificationByPassengerCapacity(capacity, newCapacity);
@@ -68,8 +78,11 @@ public class ServiceImpl implements Service {
 	}
 
 	@Override
-	public List<PassengerWagon> updateNumber(int number, int newNumber) throws ServiceException {
-		specification = new UpdateSpecificationByNumber(number, newNumber);
+	public List<PassengerWagon> updateNumber(int number, PassengerWagon wagon) throws ServiceException {
+		if (wagon == null) {
+			throw new ServiceException();
+		}
+		specification = new UpdateSpecificationByNumber(number, wagon);
 		return repository.query(specification);
 	}
 
@@ -80,12 +93,12 @@ public class ServiceImpl implements Service {
 	}
 
 	@Override
-	public List<PassengerWagon> getWagonBetweenCapacity(int minCapacity, int maxCapacity) throws ServiceException {
+	public List<PassengerWagon> getWagonByCapacity(int minCapacity, int maxCapacity) throws ServiceException {
 		if (!validator.isCapacityGreaterThanZero(minCapacity)
 				|| !validator.isMinLessThanMax(minCapacity, maxCapacity)) {
 			throw new ServiceException();
 		}
-		specification = new QuerySpecificationByCapacity(minCapacity, maxCapacity);
+		specification = new QuerySpecificationByMinMaxCapacity(minCapacity, maxCapacity);
 		return repository.query(specification);
 	}
 
