@@ -1,5 +1,6 @@
 package by.training.karpilovich.task01.service;
 
+import java.util.Collection;
 import java.util.Comparator;
 import java.util.List;
 
@@ -11,6 +12,14 @@ public interface Service {
 	int getTrainCapacity();
 	
 	int getTrainLuggageCapacity();
+	
+	List<PassengerWagon> addWagon(PassengerWagon wagon) throws ServiceException;
+	
+	List<PassengerWagon> addAllWagons(Collection<PassengerWagon> wagons) throws ServiceException;
+	
+	List<PassengerWagon> deleteAllWagons();
+	
+	List<PassengerWagon> deleteWagon(int number);
 	
 	List<PassengerWagon> updateNumber(int number, PassengerWagon wagon) throws ServiceException;
 	

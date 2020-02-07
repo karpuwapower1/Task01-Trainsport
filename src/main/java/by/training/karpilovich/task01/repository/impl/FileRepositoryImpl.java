@@ -35,9 +35,7 @@ public class FileRepositoryImpl implements Repository {
 	}
 
 	public static Repository getRepository(String fileName) throws RepositoryException {
-		if (instance == null) {
-			instance = new FileRepositoryImpl(fileName);
-		}
+		instance = new FileRepositoryImpl(fileName);
 		return instance;
 	}
 

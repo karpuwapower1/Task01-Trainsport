@@ -15,13 +15,15 @@ import by.training.karpilovich.task01.entity.PassengerWagonClass;
 import by.training.karpilovich.task01.exception.RepositoryException;
 import by.training.karpilovich.task01.exception.ServiceException;
 import by.training.karpilovich.task01.service.impl.ServiceImpl;
+import by.training.karpilovich.task01.specification.Specification;
 
 public class TestServiceImpl {
 
-	private final String fileName = "wagons2.txt";
-	private ServiceImpl service;
+	private static final String FILE_NAME = "wagons2.txt";
+	private static ServiceImpl service;
 	private List<PassengerWagon> wagons;
 	List<PassengerWagon> expected;
+	Specification specification;
 	PassengerWagon wagon0;
 	PassengerWagon wagon1;
 	PassengerWagon wagon2;
@@ -39,9 +41,9 @@ public class TestServiceImpl {
 	}
 
 	@Before
-	public  void initRepository() throws RepositoryException, ServiceException {
+	public void initRepository() throws RepositoryException, ServiceException {
 		service = (ServiceImpl) ServiceImpl.getService();
-		service.setRepository(fileName);
+		service.setRepository(FILE_NAME);
 	}
 
 	@Test
@@ -145,6 +147,45 @@ public class TestServiceImpl {
 		List<PassengerWagon> actual = service.sort(comparator);
 		expected = new ArrayList<>(wagons);
 		Assert.assertEquals(expected, actual);
+	}
+	
+	@Test
+	public void testAddWagon() throws ServiceException {
+		PassengerWagon additional = new PassengerWagon(2, LuggageWagonType.SMALL, PassengerWagonClass.FIRST);
+		List<PassengerWagon> expected = new ArrayList<>(wagons);
+		expected.add(additional);
+		List<PassengerWagon> actual = service.addWagon(additional);
+		Assert.assertEquals(expected.size(), actual.size());
+	}
+	
+	@Test(expected = ServiceException.class)
+	public void testAddWagonNullWagon() throws ServiceException {
+		PassengerWagon additional = null;
+		List<PassengerWagon> expected = new ArrayList<>(wagons);
+		expected.add(additional);
+		List<PassengerWagon> actual = service.addWagon(additional);
+		Assert.assertEquals(expected.size(), actual.size());
+	}
+	
+	@Test(expected = ServiceException.class)
+	public void testAllAddWagonNullCollection() throws ServiceException {
+		List<PassengerWagon> additionals = null;
+		List<PassengerWagon> actual = service.addAllWagons(additionals);
+		Assert.assertEquals(expected.size(), actual.size());
+	}
+	
+	@Test
+	public void testAllAddWagons() throws ServiceException {
+		PassengerWagon additional1 = new PassengerWagon(2, LuggageWagonType.SMALL, PassengerWagonClass.FIRST);
+		PassengerWagon additional2 = new PassengerWagon(2, LuggageWagonType.SMALL, PassengerWagonClass.FIRST);
+		List<PassengerWagon> additionals = new ArrayList<>();
+		additionals.add(additional1);
+		additionals.add(additional2);
+		List<PassengerWagon> expected = new ArrayList<>(wagons);
+		expected.add(additional1);
+		expected.add(additional2);
+		List<PassengerWagon> actual = service.addAllWagons(additionals);
+		Assert.assertEquals(expected.size(), actual.size());
 	}
 
 }

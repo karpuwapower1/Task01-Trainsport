@@ -6,11 +6,11 @@ import java.util.List;
 import by.training.karpilovich.task01.entity.PassengerWagon;
 import by.training.karpilovich.task01.specification.Specification;
 
-public class AddAllWagonCollectionSpecification implements Specification {
+public class AddWagonCollectionSpecification implements Specification {
 
 	private Collection<PassengerWagon> wagons;
 
-	public AddAllWagonCollectionSpecification(Collection<PassengerWagon> wagons) {
+	public AddWagonCollectionSpecification(Collection<PassengerWagon> wagons) {
 		this.wagons = wagons;
 	}
 

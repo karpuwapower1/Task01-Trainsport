@@ -1,6 +1,8 @@
 package by.training.karpilovich.task01.service.impl;
 
+import java.util.Collection;
 import java.util.Comparator;
+import java.util.Iterator;
 import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
@@ -13,6 +15,10 @@ import by.training.karpilovich.task01.factory.RepositoryFactory;
 import by.training.karpilovich.task01.repository.Repository;
 import by.training.karpilovich.task01.service.Service;
 import by.training.karpilovich.task01.specification.Specification;
+import by.training.karpilovich.task01.specification.add.AddWagonCollectionSpecification;
+import by.training.karpilovich.task01.specification.add.AddWagonSpecification;
+import by.training.karpilovich.task01.specification.delete.DeleteSpecificationAll;
+import by.training.karpilovich.task01.specification.delete.DeleteSpecificationByNumber;
 import by.training.karpilovich.task01.specification.query.QuerySpecificationAllWagons;
 import by.training.karpilovich.task01.specification.query.QuerySpecificationByMinMaxCapacity;
 import by.training.karpilovich.task01.specification.query.QuerySpecificationByNumber;
@@ -116,6 +122,44 @@ public class ServiceImpl implements Service {
 			throw new ServiceException("Comparator is null");
 		}
 		specification = new SortSpecification(comparator);
+		return repository.query(specification);
+	}
+
+	@Override
+	public List<PassengerWagon> addWagon(PassengerWagon wagon) throws ServiceException {
+		if (wagon == null) {
+			LOGGER.debug("wagon = " + wagon);
+			throw new ServiceException("wagon = null");
+		}
+		specification = new AddWagonSpecification(wagon);
+		return repository.query(specification);
+	}
+
+	@Override
+	public List<PassengerWagon> addAllWagons(Collection<PassengerWagon> wagons) throws ServiceException {
+		if (wagons == null) {
+			LOGGER.debug("wagons = " + wagons);
+			throw new ServiceException("Collection<PassengerWagons> wagons = null");
+		}
+		Iterator<PassengerWagon> iterator = wagons.iterator();
+		while (iterator.hasNext()) {
+			if (iterator.next() == null) {
+				iterator.remove();
+			}
+		}
+		specification = new AddWagonCollectionSpecification(wagons);
+		return repository.query(specification);
+	}
+
+	@Override
+	public List<PassengerWagon> deleteAllWagons() {
+		specification = new DeleteSpecificationAll();
+		return repository.query(specification);
+	}
+
+	@Override
+	public List<PassengerWagon> deleteWagon(int number) {
+		specification = new DeleteSpecificationByNumber(number);
 		return repository.query(specification);
 	}
 
