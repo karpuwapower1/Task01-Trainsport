@@ -2,47 +2,36 @@ package by.training.karpilovich.task01.entity;
 
 public class PassengerWagon extends LuggageWagon {
 
-	private PassengerWagonClass passengerWagonType;
+	private int capacity;
 	
 	public PassengerWagon() {}
 	
-	public PassengerWagon(int number,  LuggageWagonType luggageWagonType, PassengerWagonClass passengerWagonType) {
-		super(number, luggageWagonType);
-		this.passengerWagonType = passengerWagonType;
+	public PassengerWagon(int number,  int luggageCapacity, int passengerCapacity) {
+		super(number, luggageCapacity);
+		this.capacity = passengerCapacity;
 	}
 	
 	public int getLuggageCapacity() {
 		return super.getCapacity();
 	}
 	
-	public LuggageWagonType getLuggageWagonType() {
-		return super.getType();
+	public void setLuggageCapacity(int luggageCapacity) {
+		super.setCapacity(capacity);
 	}
 	
-	public void setLuggageWagonType(LuggageWagonType luggageWagonType) {
-		super.setType(luggageWagonType);
-	}
-	
-	public PassengerWagonClass getPassengerWagonType() {
-		return passengerWagonType;
-	}
-	
-	public void setPassengerWagonType(PassengerWagonClass type) {
-		this.passengerWagonType = type;
-	}
 	
 	public void setCapasity(int capacity) {
-		passengerWagonType.setCapacity(capacity);
+		this.capacity = capacity;
 	}
 	
 	public int getCapacity() {
-		return passengerWagonType.getCapacity();
+		return capacity;
 	}
 	
 	@Override
 	public String toString() {
 		return super.toString() +  getClass().getName() 
-				+ " [type=" + (passengerWagonType == null ? "null" : passengerWagonType.toString()) + "]";
+				+ " [capacity=" + capacity + "]";
 	}
 
 	@Override
@@ -50,7 +39,7 @@ public class PassengerWagon extends LuggageWagon {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + super.hashCode();
-		result = prime * result + (passengerWagonType == null ? 0 : passengerWagonType.hashCode());
+		result = prime * result + capacity;
 		return result;
 	}
 
@@ -65,7 +54,7 @@ public class PassengerWagon extends LuggageWagon {
 		if (!super.equals(obj)) 
 			return false;
 		PassengerWagon other = (PassengerWagon) obj;
-		if (passengerWagonType != other.passengerWagonType)
+		if (capacity != other.capacity)
 			return false;
 		return true;
 	}

@@ -9,12 +9,9 @@ import org.junit.Before;
 import org.junit.Test;
 
 import by.training.karpilovich.task01.comparators.ComparatorByPassengerCapacity;
-import by.training.karpilovich.task01.entity.LuggageWagonType;
 import by.training.karpilovich.task01.entity.PassengerWagon;
-import by.training.karpilovich.task01.entity.PassengerWagonClass;
 import by.training.karpilovich.task01.exception.RepositoryException;
 import by.training.karpilovich.task01.exception.ServiceException;
-import by.training.karpilovich.task01.service.impl.ServiceImpl;
 import by.training.karpilovich.task01.specification.Specification;
 
 public class TestServiceImpl {
@@ -32,9 +29,9 @@ public class TestServiceImpl {
 	public void initList() throws RepositoryException, ServiceException {
 		wagons = new ArrayList<>();
 		expected = new ArrayList<>();
-		wagon0 = new PassengerWagon(0, LuggageWagonType.SMALL, PassengerWagonClass.FIRST);
-		wagon1 = new PassengerWagon(1, LuggageWagonType.MEDIUM, PassengerWagonClass.SECOND);
-		wagon2 = new PassengerWagon(2, LuggageWagonType.BIG, PassengerWagonClass.THIRD);
+		wagon0 = new PassengerWagon(0, 50, 20);
+		wagon1 = new PassengerWagon(1, 60, 10);
+		wagon2 = new PassengerWagon(2, 70, 0);
 		wagons.add(wagon0);
 		wagons.add(wagon1);
 		wagons.add(wagon2);		
@@ -46,14 +43,14 @@ public class TestServiceImpl {
 
 	@Test
 	public void testGetTrainCapacity() {
-		int expected = 60;
+		int expected = 30;
 		int actual = service.getTrainCapacity();
 		Assert.assertEquals(expected, actual);
 	}
 
 	@Test
 	public void testGetTrainLuggageCapacity() {
-		int expected = 1700;
+		int expected = 180;
 		int actual = service.getTrainLuggageCapacity();
 		Assert.assertEquals(expected, actual);
 	}
@@ -62,7 +59,7 @@ public class TestServiceImpl {
 	public void testUpdateCapacity() throws ServiceException {
 		List<PassengerWagon> actual = service.updateCapacity(10, 15);
 		expected = new ArrayList<>(wagons);
-		expected.get(0).setCapacity(15);
+		expected.get(1).setCapacity(15);
 		Assert.assertEquals(expected, actual);
 	}
 
@@ -70,7 +67,7 @@ public class TestServiceImpl {
 	public void testUpdateCapacityMaxCapacityLessMin() throws ServiceException {
 		List<PassengerWagon> actual = service.updateCapacity(15, 10);
 		expected = new ArrayList<>(wagons);
-		expected.get(0).setCapacity(15);
+		expected.get(1).setCapacity(15);
 		Assert.assertEquals(expected, actual);
 	}
 
@@ -78,13 +75,13 @@ public class TestServiceImpl {
 	public void testUpdateNegativeMinCapacity() throws ServiceException {
 		List<PassengerWagon> actual = service.updateCapacity(-10, 15);
 		expected = new ArrayList<>(wagons);
-		expected.get(0).setCapacity(15);
+		expected.get(1).setCapacity(15);
 		Assert.assertEquals(expected, actual);
 	}
 
 	@Test
 	public void testUpdateNumber() throws ServiceException {
-		PassengerWagon update = new PassengerWagon(5, LuggageWagonType.BIG, PassengerWagonClass.FIRST);
+		PassengerWagon update = new PassengerWagon(5, 20, 40);
 		List<PassengerWagon> actual = service.updateNumber(0, update);
 		expected = new ArrayList<>(wagons);
 		expected.set(0, update);
@@ -101,9 +98,8 @@ public class TestServiceImpl {
 	}
 
 	@Test
-	public void testGetWagonNumber() {
+	public void testGetWagonByNumber() {
 		PassengerWagon actual = service.getWagonByNumber(1).get(0);
-		expected = new ArrayList<>();
 		Assert.assertEquals(wagon1, actual);
 	}
 
@@ -111,7 +107,7 @@ public class TestServiceImpl {
 	public void testGetWagonByCapacity() throws ServiceException {
 		List<PassengerWagon> actual = service.getWagonByCapacity(15, 25);
 		expected = new ArrayList<>();
-		expected.add(wagon1);
+		expected.add(wagon0);
 		Assert.assertEquals(expected, actual);
 	}
 
@@ -135,7 +131,10 @@ public class TestServiceImpl {
 	public void testSort() throws ServiceException {
 		Comparator<PassengerWagon> comparator = new ComparatorByPassengerCapacity();
 		List<PassengerWagon> actual = service.sort(comparator);
-		expected = new ArrayList<>(wagons);
+		expected = new ArrayList<>();
+		expected.add(wagon2);
+		expected.add(wagon1);
+		expected.add(wagon0);
 		Assert.assertEquals(expected, actual);
 	}
 
@@ -149,7 +148,7 @@ public class TestServiceImpl {
 	
 	@Test
 	public void testAddWagon() throws ServiceException {
-		PassengerWagon additional = new PassengerWagon(2, LuggageWagonType.SMALL, PassengerWagonClass.FIRST);
+		PassengerWagon additional = new PassengerWagon(2, 60, 5);
 		List<PassengerWagon> expected = new ArrayList<>(wagons);
 		expected.add(additional);
 		List<PassengerWagon> actual = service.addWagon(additional);
@@ -174,8 +173,8 @@ public class TestServiceImpl {
 	
 	@Test
 	public void testAllAddWagons() throws ServiceException {
-		PassengerWagon additional1 = new PassengerWagon(2, LuggageWagonType.SMALL, PassengerWagonClass.FIRST);
-		PassengerWagon additional2 = new PassengerWagon(2, LuggageWagonType.SMALL, PassengerWagonClass.FIRST);
+		PassengerWagon additional1 = new PassengerWagon(2, 30, 40);
+		PassengerWagon additional2 = new PassengerWagon(2, 15, 10);
 		List<PassengerWagon> additionals = new ArrayList<>();
 		additionals.add(additional1);
 		additionals.add(additional2);
