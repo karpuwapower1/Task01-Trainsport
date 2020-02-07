@@ -2,7 +2,7 @@ package by.training.karpilovich.task01.factory;
 
 import by.training.karpilovich.task01.exception.RepositoryException;
 import by.training.karpilovich.task01.repository.Repository;
-import by.training.karpilovich.task01.repository.impl.FileRepositoryImpl;
+import by.training.karpilovich.task01.repository.impl.FileRepository;
 
 public class RepositoryFactory {
 	
@@ -18,7 +18,7 @@ public class RepositoryFactory {
 	}
 
 	public Repository getRepository(String fileName) throws RepositoryException {
-		return FileRepositoryImpl.getRepository(fileName);
+		return FileRepository.getRepository(fileName);
 	}
 
 }

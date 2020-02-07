@@ -1,4 +1,4 @@
-package by.training.karpilovich.task01.serviceImpl;
+package by.training.karpilovich.task01.service.impl;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -20,7 +20,7 @@ import by.training.karpilovich.task01.specification.Specification;
 public class TestServiceImpl {
 
 	private static final String FILE_NAME = "wagons2.txt";
-	private static ServiceImpl service;
+	private ServiceImpl service;
 	private List<PassengerWagon> wagons;
 	List<PassengerWagon> expected;
 	Specification specification;
@@ -29,7 +29,7 @@ public class TestServiceImpl {
 	PassengerWagon wagon2;
 
 	@Before
-	public void initList() throws RepositoryException {
+	public void initList() throws RepositoryException, ServiceException {
 		wagons = new ArrayList<>();
 		expected = new ArrayList<>();
 		wagon0 = new PassengerWagon(0, LuggageWagonType.SMALL, PassengerWagonClass.FIRST);
@@ -37,13 +37,11 @@ public class TestServiceImpl {
 		wagon2 = new PassengerWagon(2, LuggageWagonType.BIG, PassengerWagonClass.THIRD);
 		wagons.add(wagon0);
 		wagons.add(wagon1);
-		wagons.add(wagon2);
-	}
-
-	@Before
-	public void initRepository() throws RepositoryException, ServiceException {
+		wagons.add(wagon2);		
 		service = (ServiceImpl) ServiceImpl.getService();
 		service.setRepository(FILE_NAME);
+		service.deleteAllWagons();
+		service.addAllWagons(wagons);
 	}
 
 	@Test

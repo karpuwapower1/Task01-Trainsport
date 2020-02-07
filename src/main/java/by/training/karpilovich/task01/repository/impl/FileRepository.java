@@ -12,18 +12,15 @@ import by.training.karpilovich.task01.exception.RepositoryException;
 import by.training.karpilovich.task01.reader.impl.FileReader;
 import by.training.karpilovich.task01.repository.Repository;
 import by.training.karpilovich.task01.specification.Specification;
-import by.training.karpilovich.task01.validator.Validator;
 
-public class FileRepositoryImpl implements Repository {
-	
-	private static final Logger LOGGER = LogManager.getLogger(FileRepositoryImpl.class);
+public class FileRepository implements Repository {
 
-	List<PassengerWagon> train = new ArrayList<>();
-	FileReader reader;
-	Validator validator = new Validator();
-	private static FileRepositoryImpl instance;
+	private static final Logger LOGGER = LogManager.getLogger(FileRepository.class);
+	private FileReader reader;
+	private List<PassengerWagon> train = new ArrayList<>();
+	private static FileRepository instance;
 
-	private FileRepositoryImpl(String fileName) throws RepositoryException {
+	private FileRepository(String fileName) throws RepositoryException {
 		reader = (FileReader) FileReader.getReader();
 		reader.setFileName(fileName);
 		try {
@@ -35,7 +32,9 @@ public class FileRepositoryImpl implements Repository {
 	}
 
 	public static Repository getRepository(String fileName) throws RepositoryException {
-		instance = new FileRepositoryImpl(fileName);
+		if (instance == null) {
+			instance = new FileRepository(fileName);
+		}
 		return instance;
 	}
 
