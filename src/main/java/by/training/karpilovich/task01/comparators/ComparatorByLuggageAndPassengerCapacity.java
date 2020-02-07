@@ -8,8 +8,8 @@ public class ComparatorByLuggageAndPassengerCapacity implements Comparator<Passe
 
 	@Override
 	public int compare(PassengerWagon o1, PassengerWagon o2) {
-		Comparator<PassengerWagon> comparator = Comparator.comparing(PassengerWagon::getLuggageCapacity)
-				.thenComparing(PassengerWagon::getCapacity);
+		Comparator<PassengerWagon> comparator = Comparator.comparingInt(PassengerWagon::getLuggageCapacity)
+				.thenComparingInt(PassengerWagon::getCapacity);
 		return comparator.compare(o1, o2);
 	}
 }

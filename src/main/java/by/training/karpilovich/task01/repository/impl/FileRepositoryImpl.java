@@ -3,6 +3,9 @@ package by.training.karpilovich.task01.repository.impl;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import by.training.karpilovich.task01.entity.PassengerWagon;
 import by.training.karpilovich.task01.exception.ReaderException;
 import by.training.karpilovich.task01.exception.RepositoryException;
@@ -12,6 +15,8 @@ import by.training.karpilovich.task01.specification.Specification;
 import by.training.karpilovich.task01.validator.Validator;
 
 public class FileRepositoryImpl implements Repository {
+	
+	private static final Logger LOGGER = LogManager.getLogger(FileRepositoryImpl.class);
 
 	List<PassengerWagon> train = new ArrayList<>();
 	FileReader reader;
@@ -24,6 +29,7 @@ public class FileRepositoryImpl implements Repository {
 		try {
 			train = reader.read();
 		} catch (ReaderException e) {
+			LOGGER.warn(e);
 			throw new RepositoryException();
 		}
 	}

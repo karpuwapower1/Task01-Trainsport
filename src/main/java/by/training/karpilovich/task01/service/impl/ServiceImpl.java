@@ -3,6 +3,9 @@ package by.training.karpilovich.task01.service.impl;
 import java.util.Comparator;
 import java.util.List;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import by.training.karpilovich.task01.entity.PassengerWagon;
 import by.training.karpilovich.task01.exception.RepositoryException;
 import by.training.karpilovich.task01.exception.ServiceException;
@@ -19,6 +22,9 @@ import by.training.karpilovich.task01.specification.update.UpdateSpecificationBy
 import by.training.karpilovich.task01.validator.Validator;
 
 public class ServiceImpl implements Service {
+	
+	private static final Logger LOGGER = LogManager.getLogger(Service.class);
+	
 
 	private static Repository repository;
 	private Validator validator = new Validator();
@@ -33,8 +39,8 @@ public class ServiceImpl implements Service {
 			RepositoryFactory factory = RepositoryFactory.getFactory();
 			repository = factory.getRepository(fileName);
 		} catch (RepositoryException e) {
+			LOGGER.warn("File not found", e);
 			throw new ServiceException("Exception while initializing a repository", e);
-			// TODO logging
 		}
 	}
 	
@@ -71,6 +77,7 @@ public class ServiceImpl implements Service {
 	public List<PassengerWagon> updateCapacity(int capacity, int newCapacity) throws ServiceException {
 		if (!validator.isCapacityGreaterThanZero(capacity) 
 				|| !validator.isMinLessThanMax(capacity, newCapacity)) {
+			LOGGER.debug("capacity=" + capacity + " newCapacity=" + newCapacity);
 			throw new ServiceException();
 		}
 		specification = new UpdateSpecificationByPassengerCapacity(capacity, newCapacity);
@@ -96,6 +103,7 @@ public class ServiceImpl implements Service {
 	public List<PassengerWagon> getWagonByCapacity(int minCapacity, int maxCapacity) throws ServiceException {
 		if (!validator.isCapacityGreaterThanZero(minCapacity)
 				|| !validator.isMinLessThanMax(minCapacity, maxCapacity)) {
+			LOGGER.debug("minCapacity=" + minCapacity + " maxCapacity=" + maxCapacity);
 			throw new ServiceException();
 		}
 		specification = new QuerySpecificationByMinMaxCapacity(minCapacity, maxCapacity);

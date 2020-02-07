@@ -1,5 +1,8 @@
 package by.training.karpilovich.task01.reader.util;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import by.training.karpilovich.task01.entity.LuggageWagonType;
 import by.training.karpilovich.task01.entity.PassengerWagon;
 import by.training.karpilovich.task01.entity.PassengerWagonClass;
@@ -13,6 +16,7 @@ public class PassengerWagonFormat {
 	public static final int LUGGAGE_WAGON_TYPE = 1;
 	public static final int WAGON_CLASS = 2;
 
+	private static final Logger LOGGER = LogManager.getLogger(PassengerWagonFormat.class);
 
 	WagonFactory factory = WagonFactory.getFactory();
 
@@ -24,8 +28,11 @@ public class PassengerWagonFormat {
 			LuggageWagonType luggageWagonType = LuggageWagonType.valueOf(parameters[LUGGAGE_WAGON_TYPE].toUpperCase());
 			return factory.getPassengerWagon(wagonNumber, luggageWagonType, type);
 		} catch (NumberFormatException e) {
+			LOGGER.warn("Illegal string " + wagon + " with parameter " + parameters[WAGON_NUMBER]);
 			throw new PassengerWagonFormatException("Invalid number", e);
 		} catch (IllegalArgumentException | NullPointerException e) {
+			LOGGER.warn("Illegal string " + wagon + " with parameter " + parameters[LUGGAGE_WAGON_TYPE] + " or "
+					+ parameters[WAGON_CLASS]);
 			throw new PassengerWagonFormatException("Invalid enum type", e);
 		}
 	}
